@@ -7,6 +7,7 @@ from simple_http_client import Client as HTTPClient, FormData, HTTPError
 
 from .record import Record
 from .file import File
+from .version import __version__
 
 logger = logging.getLogger(__name__)
 
@@ -22,12 +23,11 @@ class Client(object):
     self.auth = auth
     self.guest_space_id = guest_space_id
     self.user_agent = user_agent
+    self.version = __version__
 
   def _build_user_agent(self):
     if self.user_agent == None:
-      with open('../VERSION.txt') as f:
-        version = f.read()
-      return 'kintone_rest_client/{}'.format(version)
+      return '{}{}{}'.format('kintone_rest_client/', self.version, ';python')
     else:
       return self.user_agent
 
