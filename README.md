@@ -14,7 +14,7 @@ pip install git+https://github.com/yamaryu0508/kintone-rest-client
 Here is a quick example:
 ```python
 import os
-from kitone_rest_client import Client as KintoneRESTClient
+from kintone_rest_client import Client as KintoneRESTClient
 
 kintone = KintoneRESTClient(
   base_url=os.environ.get('KINTONE_BASE_URL'),
