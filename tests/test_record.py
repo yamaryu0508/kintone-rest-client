@@ -88,6 +88,38 @@ class TestClient(unittest.TestCase):
   def test_get_all_records_with_id_ok(self):
     kintone = self.kintone
     params={
+      'app': self.app
+    }
+    response = kintone.Record.get_all_records_with_id(params)
+    self.assertIn('records', response)
+
+    return
+
+  def test_get_all_records_with_id_with_condition_ok(self):
+    kintone = self.kintone
+    params={
+      'app': self.app,
+      'condition': '$id=1'
+    }
+    response = kintone.Record.get_all_records_with_id(params)
+    self.assertIn('records', response)
+
+    return
+
+  def test_get_all_records_with_id_with_black_condition_ok(self):
+    kintone = self.kintone
+    params={
+      'app': self.app,
+      'condition': ''
+    }
+    response = kintone.Record.get_all_records_with_id(params)
+    self.assertIn('records', response)
+
+    return
+
+  def test_get_all_records_with_id_with_fields_ok(self):
+    kintone = self.kintone
+    params={
       'app': self.app,
       'fields': ['$id']
     }

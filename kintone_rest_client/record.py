@@ -35,7 +35,7 @@ class Record(object):
       data = {'records':[]}
 
     query = '$id > {} order by $id asc limit {}'.format(last_record_id, 500)
-    if 'condition' in params:
+    if 'condition' in params and len(params['condition']) > 0:
       query = '{} and {}'.format(params['condition'], query)
 
     body = {
