@@ -1,3 +1,5 @@
+import copy
+
 class Record(object):
   def __init__(self, client):
     self.client = client
@@ -63,3 +65,44 @@ class Record(object):
         last_record_id=int(response['records'][-1]['$id']['value']),
         data=data
       )
+
+  def add_all_records(self, params):
+    data = {'ids':[], 'revisions':[]}
+
+    loop_size = 100
+    start = 0
+    end = loop_size
+
+    while True:
+      _params = copy.deepcopy(params)
+      records = params['records'][start:end]
+      _params['records'] = records
+      r = self.add_records(_params)
+      data['ids'].extend(r['ids'])
+      data['revisions'].extend(r['revisions'])
+
+      if len(records) < 100:
+        break
+      start = start + loop_size
+      end = end + loop_size
+    return data
+
+  def update_all_records(self, params):
+    data = {'records':[]}
+
+    loop_size = 100
+    start = 0
+    end = loop_size
+
+    while True:
+      _params = copy.deepcopy(params)
+      records = params['records'][start:end]
+      _params['records'] = records
+      r = self.update_records(_params)
+      data['records'].extend(r['records'])
+
+      if len(records) < 100:
+        break
+      start = start + loop_size
+      end = end + loop_size
+    return data

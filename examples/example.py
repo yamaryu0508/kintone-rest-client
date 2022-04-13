@@ -17,6 +17,7 @@ kintone = Client(
 
 app = 759
 record_id = 20
+records_len = 150
 file_key = '20210924194537F38439049CD548A890C30A4428C78675148'
 
 try:
@@ -54,6 +55,22 @@ except Exception as e:
   print(e.body)
 
 try:
+  records = []
+  for i in range(records_len):
+    records.append({
+      'Company_Name': {
+        'value': f'Cybozu Inc., - {i}'
+      }
+    })
+  params={
+    'app': app,
+    'records': records
+  }
+  response = kintone.Record.add_all_records(params)
+except Exception as e:
+  print(e.to_dict)
+
+try:
   response = kintone.Record.update_record({
     'app': app,
     'id': record_id,
@@ -80,6 +97,25 @@ try:
     }]
   })
   print(response)
+except Exception as e:
+  print(e.to_dict)
+
+try:
+  records = []
+  for i in range(self.records_len):
+    records.append({
+      'id': self.record_id + i,
+      'record': {
+        'Company_Name': {
+          'value': f'Kintone Corporation - {i}'
+        }
+      }
+    })
+  params={
+    'app': app,
+    'records': records
+  }
+  response = kintone.Record.update_all_records(params)
 except Exception as e:
   print(e.to_dict)
 
