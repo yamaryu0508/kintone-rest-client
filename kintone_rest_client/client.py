@@ -56,8 +56,8 @@ class Client(object):
 
   def _build_auth_header(self):
     headers = {}
-    username = self.auth['username'] or os.environ.get('KINTONE_USERNAME')
-    password = self.auth['password'] or os.environ.get('KINTONE_PASSWORD')
+    username = ('username' in self.auth and self.auth['username']) or os.environ.get('KINTONE_USERNAME') or None
+    password = ('password' in self.auth and self.auth['password']) or os.environ.get('KINTONE_PASSWORD') or None
     if 'api_token' in self.auth:
       headers.update({'X-Cybozu-API-Token': self.auth['api_token']})
     if 'bearer_token' in self.auth:
